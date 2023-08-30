@@ -1,0 +1,170 @@
+#!/usr/bin/env bash
+# Daily Jornal created for Samuel Wolfgang
+
+#-------------HEADER-------------------------------------------------------------------|
+# AUTHOR               : Samuel Wolfgang <jsamuelwolfgang@gmail.com>
+# HOMEPAGE             : Github
+# CREATION-DATE        : 2023-08-21
+# SOFTWARE             : Jornal of SW
+# VERSION              : 1.0
+# LICENCE              : 
+# SHORT DESCRIPTION    : This software is a Daily Jornal
+#
+# CHANGELOG :
+#
+#--------------------------------------------------------------------------------------|
+
+
+#------------------------------------ VARIABLES --------------------------------------->
+
+DATE="$(date -I)" # Today's date
+
+#---------------------------------- END-VARIABLES ------------------------------------->
+
+
+#-------------------------------------- TEST ------------------------------------------>
+
+# Validating if exist the directory read/
+if [ $(find read-notices) -eq 1 ]; then
+	mkdir read-notices
+fi
+
+#------------------------------------ END-TEST ---------------------------------------->
+
+
+#------------------------------------- FUCTIONS --------------------------------------->
+
+function Main() {
+	clear
+echo '
++===============================================================================================================+
++    $$$$$\                                         $$\                  $$$$$$\         $$$$$$\  $$\      $$\  +
++    \__$$ |                                        $$ |                $$  __$$\       $$  __$$\ $$ | $\  $$ | +
++       $$ | $$$$$$\   $$$$$$\  $$$$$$$\   $$$$$$\  $$ |       $$$$$$\  $$ /  \__|      $$ /  \__|$$ |$$$\ $$ | +
++       $$ |$$  __$$\ $$  __$$\ $$  __$$\  \____$$\ $$ |      $$  __$$\ $$$$\           \$$$$$$\  $$ $$ $$\$$ | +
++ $$\   $$ |$$ /  $$ |$$ |  \__|$$ |  $$ | $$$$$$$ |$$ |      $$ /  $$ |$$  _|           \____$$\ $$$$  _$$$$ | +
++ $$ |  $$ |$$ |  $$ |$$ |      $$ |  $$ |$$  __$$ |$$ |      $$ |  $$ |$$ |            $$\   $$ |$$$  / \$$$ | +
++ \$$$$$$  |\$$$$$$  |$$ |      $$ |  $$ |\$$$$$$$ |$$ |      \$$$$$$  |$$ |            \$$$$$$  |$$  /   \$$ | +
++  \______/  \______/ \__|      \__|  \__| \_______|\__|       \______/ \__|             \______/ \__/     \__| +
++                                                                                                               +
++===============================================================================================================+'
+
+	echo '[1] Notices'
+	echo '[2] What you do Tomorrow?'
+	echo '[3] How do i feel?'
+	echo '[4] Exit'
+	echo
+	read -p "Type: " MAIN_CH
+
+	case $MAIN_CH in
+		"1")
+	   	   Notices
+           	   ;;
+
+		"2")
+	   	   clear
+	   	   echo 'Linux for sure =D'
+	   	   sleep 2
+	   	   Main
+	      	   ;;
+
+		"3")
+	   	   clear
+	           echo 'i am really ok, because i will live in Ireland'
+	           sleep 2
+	           Main
+	           ;;
+
+	        "4")
+	           echo
+	           echo 'Exiting...'
+	           exit
+	           ;;
+
+		*)
+		   echo
+	  	   echo 'Argumento not valid!'
+	 	   sleep 2
+		   Main
+ 		   ;;
+	esac
+}
+
+function Notices() {
+	clear
+	echo '//////////////////// PAGES ////////////////////'
+	echo '==============================================='
+	echo '[1] Read'
+	echo '[2] Write your day     (WITH NANO)'
+	echo '[3] Back'
+	echo
+	read -p "Type: " NOTICES_CHOICE
+
+	case $NOTICES_CHOICE in
+		"1")
+	   	   if [ $(find read-notices | wc -l) -eq 1 ]; then   # Validates if the directory is empty or not
+        	  	   clear
+			   echo 'null'
+			   sleep 2
+			   Notices
+	   	   else
+	   	   Reading
+	   	   fi
+	   	   ;;
+
+		"2")
+		   Write
+   	   	   ;;
+
+		"3")
+	   	   clear
+	   	   echo 'Come back...'
+	   	   sleep 2
+	   	   Main
+	   	   ;;
+
+		*)
+	   	   echo 'Argument not valid!'
+	   	   sleep 2
+	   	   Notices
+	   	   ;;
+	esac
+}
+
+function Reading() {
+	clear
+
+	# Defining the Variables Locations
+	DATES=$(find read-notices | sed 's/read-notices\///')
+
+	echo '/////////////// CHOICE THE CHAPTER ///////////////'
+	echo '=================================================='
+	while read -r date; do
+		echo "## $date"
+	done <<< "$DATES"
+
+	echo
+	echo 'E) Back'
+	echo
+	read -p 'Type or choice: ' CHAPTER
+
+	if [ "`echo $CHAPTER`" = "E" ]; then
+		Notices
+	elif [ "`echo $CHAPTER`" = "e" ]; then
+		Notices
+	else
+		less ./read-notices/$CHAPTER
+		Reading
+	fi
+}
+
+function Write() {
+	clear
+	nano ./read-notices/$DATE
+	Notices
+}
+
+
+
+# Calling the Main function
+Main

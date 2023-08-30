@@ -1,0 +1,6 @@
+1 = Principal; informando o nome do jornal                                                             # Feito
+2 = Notices; onde vai estar informando os dias da semana para voce escolher para ler e escrever        # Feito
+3 = ?name? ; o que desejo estudar e minhas expectativas para amanha
+4 = como me sinto em relacao aos estudos
+
+opt - gravar um video falando sobre o meu dia em ingles
