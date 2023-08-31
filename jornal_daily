@@ -50,8 +50,8 @@ echo '
 +===============================================================================================================+'
 
 	echo '[1] Notices'
-	echo '[2] What you do Tomorrow?'
-	echo '[3] How do i feel?'
+	echo '[2] Agenda'
+	echo '[3] Focus'
 	echo '[4] Exit'
 	echo
 	read -p "Type: " MAIN_CH
@@ -62,17 +62,11 @@ echo '
            	   ;;
 
 		"2")
-	   	   clear
-	   	   echo 'Linux for sure =D'
-	   	   sleep 2
-	   	   Main
+		   Agenda
 	      	   ;;
 
 		"3")
-	   	   clear
-	           echo 'i am really ok, because i will live in Ireland'
-	           sleep 2
-	           Main
+		   Focus
 	           ;;
 
 	        "4")
@@ -117,9 +111,6 @@ function Notices() {
    	   	   ;;
 
 		"3")
-	   	   clear
-	   	   echo 'Come back...'
-	   	   sleep 2
 	   	   Main
 	   	   ;;
 
@@ -133,9 +124,8 @@ function Notices() {
 
 function Reading() {
 	clear
-
-	# Defining the Variables Locations
-	DATES=$(find read-notices | sed 's/read-notices\///')
+	# DATES=$(find read-notices | sed 's/read-notices\///')         	# Defining the Variables Locations
+	DATES=$(ls read-notices)   # Defining the Variables Locations
 
 	echo '/////////////// CHOICE THE CHAPTER ///////////////'
 	echo '=================================================='
@@ -160,11 +150,65 @@ function Reading() {
 
 function Write() {
 	clear
+	echo '
++=================================+
++       ____        __            +
++      / __ \__  __/ /__  _____   +
++     / /_/ / / / / / _ \/ ___/   +
++    / _, _/ /_/ / /  __(__  )    +
++   /_/ |_|\__,_/_/\___/____/     +
++                                 +
++=================================+ '
+
+	echo
+	echo '1. In your first paragraph, write about your day.'
+	echo '2. In second, write about you want study tomorrow.'
+	echo '3. For the last, express yourself what you are feeling about todas, in relation to studies.'
+	echo
+	read -p 'Press enter for continue...'
 	nano ./read-notices/$DATE
 	Notices
 }
 
+function Agenda() {
+	clear
+	echo 'In building...'
+	sleep 2
+	Main
+}
 
+function Focus() {
+	clear
+	echo '///////////// CREATING THE FUNDATION //////////////'
+        echo '=================================================='
+	echo 'Understand how the Linux work:'
+	echo '  - LPI-1'
+	echo '  - Linux, Basics for Hackers'
+	echo '  - Linux, A Biblia'
+	echo '  - Slackjeff Course'
+	echo
+	echo 'Study Shell Script:'
+	echo '  - Slackjeff Course'
+	echo '  - Shell Script Profissional'
+	echo '  - Programacao Shell Linux'
+	echo '  - Alura Course'
+	echo
+	echo 'Get good in Networks:'
+	echo '  - CCENT/CCNA ICND1'
+	echo '  - Cisco Fundation Courses'
+	echo '  - Administracao de redes Linux'
+	echo '  - Alura Courses'
+	echo
+	echo 'Taking shape for DevOps:'
+	echo '  - Alura Courses'
+	echo '  - AWS Educate'
+	echo '  - Google Cloud Computing Foundations'
+	echo
+	echo 'Now, go migrate for Security/Hacker...'
+	echo
+	read -p 'Press enter for back...'
+	Main
+}
 
 # Calling the Main function
 Main
