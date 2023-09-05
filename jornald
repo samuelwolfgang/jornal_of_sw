@@ -1,0 +1,215 @@
+#!/usr/bin/env bash
+# Daily Jornal created for Samuel Wolfgang
+
+#-------------HEADER-------------------------------------------------------------------|
+# AUTHOR               : Samuel Wolfgang <jsamuelwolfgang@gmail.com>
+# HOMEPAGE             : Github
+# CREATION-DATE        : 2023-08-21
+# SOFTWARE             : Jornal of SW
+# VERSION              : 1.0
+# LICENCE              : 
+# SHORT DESCRIPTION    : This software is a Daily Jornal
+#
+# CHANGELOG :
+#
+#--------------------------------------------------------------------------------------|
+
+
+#------------------------------------ VARIABLES --------------------------------------->
+
+DATE="$(date -I)"                             # Today's date
+DIRREAD=/Users/`users`/jornald/read-notices       # News Directory
+
+#---------------------------------- END-VARIABLES ------------------------------------->
+
+
+#-------------------------------------- TEST ------------------------------------------>
+
+# Validating if exist the directory read/
+if [ ! -d $DIRREAD ]; then
+	mkdir -p /Users/`users`/jornald/read-notices
+fi
+
+#------------------------------------ END-TEST ---------------------------------------->
+
+
+#------------------------------------- FUCTIONS --------------------------------------->
+
+function Main() {
+	clear
+echo '
++===============================================================================================================+
++    $$$$$\                                         $$\                  $$$$$$\         $$$$$$\  $$\      $$\  +
++    \__$$ |                                        $$ |                $$  __$$\       $$  __$$\ $$ | $\  $$ | +
++       $$ | $$$$$$\   $$$$$$\  $$$$$$$\   $$$$$$\  $$ |       $$$$$$\  $$ /  \__|      $$ /  \__|$$ |$$$\ $$ | +
++       $$ |$$  __$$\ $$  __$$\ $$  __$$\  \____$$\ $$ |      $$  __$$\ $$$$\           \$$$$$$\  $$ $$ $$\$$ | +
++ $$\   $$ |$$ /  $$ |$$ |  \__|$$ |  $$ | $$$$$$$ |$$ |      $$ /  $$ |$$  _|           \____$$\ $$$$  _$$$$ | +
++ $$ |  $$ |$$ |  $$ |$$ |      $$ |  $$ |$$  __$$ |$$ |      $$ |  $$ |$$ |            $$\   $$ |$$$  / \$$$ | +
++ \$$$$$$  |\$$$$$$  |$$ |      $$ |  $$ |\$$$$$$$ |$$ |      \$$$$$$  |$$ |            \$$$$$$  |$$  /   \$$ | +
++  \______/  \______/ \__|      \__|  \__| \_______|\__|       \______/ \__|             \______/ \__/     \__| +
++                                                                                                               +
++===============================================================================================================+'
+
+	echo '[1] Notices'
+	echo '[2] Agenda'
+	echo '[3] Focus'
+	echo '[4] Exit'
+	echo
+	read -p "Type: " MAIN_CH
+
+	case $MAIN_CH in
+		"1")
+	   	   Notices
+           	   ;;
+
+		"2")
+		   Agenda
+	      	   ;;
+
+		"3")
+		   Focus
+	           ;;
+
+	        "4")
+	           echo
+	           echo 'Exiting...'
+	           exit
+	           ;;
+
+		*)
+		   echo
+	  	   echo 'Argumento not valid!'
+	 	   sleep 2
+		   Main
+ 		   ;;
+	esac
+}
+
+function Notices() {
+	clear
+	echo '//////////////////// PAGES ////////////////////'
+	echo '==============================================='
+	echo '[1] Read'
+	echo '[2] Write your day     (WITH NANO)'
+	echo '[3] Back'
+	echo
+	read -p "Type: " NOTICES_CHOICE
+
+	case $NOTICES_CHOICE in
+		"1")
+	   	   if [ $(find $DIRREAD | wc -l) -eq 1 ]; then   # Validates if the directory is empty or not
+        	  	   clear
+			   echo 'null'
+			   sleep 2
+			   Notices
+	   	   else
+	   	   Reading
+	   	   fi
+	   	   ;;
+
+		"2")
+		   Write
+   	   	   ;;
+
+		"3")
+	   	   Main
+	   	   ;;
+
+		*)
+	   	   echo 'Argument not valid!'
+	   	   sleep 2
+	   	   Notices
+	   	   ;;
+	esac
+}
+
+function Reading() {
+	clear
+	# DATES=$(find read-notices | sed 's/read-notices\///')         	# Defining the Variables Locations
+	DATES=$(ls $DIRREAD)   # Defining the Variables Locations
+
+	echo '/////////////// CHOICE THE CHAPTER ///////////////'
+	echo '=================================================='
+	while read -r date; do
+		echo "## $date"
+	done <<< "$DATES"
+
+	echo
+	echo 'E) Back'
+	echo
+	read -p 'Type or choice: ' CHAPTER
+
+	if [ "`echo $CHAPTER`" = "E" ]; then
+		Notices
+	elif [ "`echo $CHAPTER`" = "e" ]; then
+		Notices
+	else
+		less $DIRREAD/$CHAPTER
+		Reading
+	fi
+}
+
+function Write() {
+	clear
+	echo '
++=================================+
++       ____        __            +
++      / __ \__  __/ /__  _____   +
++     / /_/ / / / / / _ \/ ___/   +
++    / _, _/ /_/ / /  __(__  )    +
++   /_/ |_|\__,_/_/\___/____/     +
++                                 +
++=================================+ '
+
+	echo
+	echo '1. In your first paragraph, write about your day.'
+	echo '2. In second, write about you want study tomorrow.'
+	echo '3. For the last, express yourself what you are feeling about todas, in relation to studies.'
+	echo
+	read -p 'Press enter for continue...'
+	nano $DIRREAD/$DATE
+	Notices
+}
+
+function Agenda() {
+	clear
+	echo 'In building...'
+	sleep 2
+	Main
+}
+
+function Focus() {
+	clear
+	echo '///////////// CREATING THE FUNDATION //////////////'
+        echo '=================================================='
+	echo 'Understand how the Linux work:'
+	echo '  - LPI-1'
+	echo '  - Linux, Basics for Hackers'
+	echo '  - Linux, A Biblia'
+	echo '  - Slackjeff Course'
+	echo
+	echo 'Study Shell Script:'
+	echo '  - Slackjeff Course'
+	echo '  - Shell Script Profissional'
+	echo '  - Programacao Shell Linux'
+	echo '  - Alura Course'
+	echo
+	echo 'Get good in Networks:'
+	echo '  - CCENT/CCNA ICND1'
+	echo '  - Cisco Fundation Courses'
+	echo '  - Administracao de redes Linux'
+	echo '  - Alura Courses'
+	echo
+	echo 'Taking shape for DevOps:'
+	echo '  - Alura Courses'
+	echo '  - AWS Educate'
+	echo '  - Google Cloud Computing Foundations'
+	echo
+	echo 'Now, go migrate for Security/Hacker...'
+	echo
+	read -p 'Press enter for back...'
+	Main
+}
+
+# Calling the Main function
+Main
